@@ -12,3 +12,12 @@ class Pot(GameObject):
 
     def update(self, dt):
         pass
+
+    def Break(self):
+        self.is_broken = True
+        self.state = 'broken'
+        self.solid = False
+
+    def Collides(self, target):
+        return not(self.x + self.width < target.x or self.x > target.x + target.width or
+                   self.y + self.height < target.y or self.y > target.y + target.height)

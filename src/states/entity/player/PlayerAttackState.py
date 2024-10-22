@@ -57,6 +57,11 @@ class PlayerAttackState(BaseState):
                 entity.Damage(1)
                 entity.SetInvulnerable(0.2)
                 gSounds['hit_enemy'].play()
+        
+        for object in self.dungeon.current_room.objects: 
+            if object.type == 'pot':
+                if object.Collides(self.sword_hitbox) and object.is_broken == False:
+                    object.Break()
 
         if self.player.curr_animation.times_played > 0:
             self.player.curr_animation.times_played = 0
