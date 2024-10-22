@@ -119,7 +119,7 @@ class Room:
                 gSounds['door'].play()
             
         def pot_function():
-            print('pot function')
+            pass
 
         switch.on_collide = switch_function
         pot.on_collide = pot_function
@@ -130,6 +130,13 @@ class Room:
     def update(self, dt, events):
         if self.adjacent_offset_x != 0 or self.adjacent_offset_y != 0:
             return
+
+        for event in events:
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_q:
+                    for object in self.objects:
+                        if object.type == 'pot' and object.is_touching and object.is_broken == False:
+                            object.Lift()
 
         self.player.update(dt, events)
 
@@ -151,6 +158,36 @@ class Room:
             object.update(dt)
             if self.player.Collides(object):
                 object.on_collide()
+
+            if object.type == 'pot':
+                if self.player.direction == 'left':
+                    self.player.x = self.player.x - PLAYER_WALK_SPEED * dt
+                    if self.player.Collides(object):
+                        print('pot is in front of player - left')
+                        object.is_touching = True
+                    self.player.x = self.player.x + PLAYER_WALK_SPEED * dt
+
+                elif self.player.direction == 'right':
+                    self.player.x = self.player.x + PLAYER_WALK_SPEED * dt
+                    if self.player.Collides(object):
+                        print('pot is in front of player - right')
+                        object.is_touching = True
+                    self.player.x = self.player.x - PLAYER_WALK_SPEED * dt
+
+                elif self.player.direction == 'up':
+                    self.player.y = self.player.y - PLAYER_WALK_SPEED * dt
+                    if self.player.Collides(object):
+                        print('pot is in front of player - up')
+                        object.is_touching = True
+                    self.player.y = self.player.y + PLAYER_WALK_SPEED * dt
+
+                else:
+                    self.player.y = self.player.y + PLAYER_WALK_SPEED * dt
+                    if self.player.Collides(object):
+                        print('pot is in front of player - down')
+                        object.is_touching = True
+                    self.player.y = self.player.y - PLAYER_WALK_SPEED * dt
+                        
 
     def render(self, screen, x_mod, y_mod, shifting):
         for y in range(self.height):
