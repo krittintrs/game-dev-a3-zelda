@@ -49,14 +49,25 @@ class PlayerWalkState(EntityWalkState):
         #         elif event.key == pygame.K_DOWN:
         #             self.entity.direction = 'down'
         #             self.entity.ChangeAnimation('walk_down')
-
-        #move and bump to the wall check
+                
+        # move and bump to the wall check
         super().update(dt, events)
 
+        # check if player is colliding with solid objects
+        for object in self.dungeon.current_room.objects: 
+            if self.entity.Collides(object) and object.solid:
+                if self.entity.direction == 'left':
+                    self.entity.x = self.entity.x + PLAYER_WALK_SPEED * dt
+                elif self.entity.direction == 'right':
+                    self.entity.x = self.entity.x - PLAYER_WALK_SPEED * dt
+                elif self.entity.direction == 'up':
+                    self.entity.y = self.entity.y + PLAYER_WALK_SPEED * dt
+                else:
+                    self.entity.y = self.entity.y - PLAYER_WALK_SPEED * dt
 
+        #temporal move to the wall (bumping effect)
         if self.bumped:
             if self.entity.direction == 'left':
-                #temporal move to the wall (bumping effect)
                 self.entity.x = self.entity.x - PLAYER_WALK_SPEED * dt
 
                 for doorway in self.dungeon.current_room.doorways:

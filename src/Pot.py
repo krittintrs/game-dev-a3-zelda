@@ -5,9 +5,10 @@ from src.GameObject import GameObject
 class Pot(GameObject):
     def __init__(self, conf, x, y):
         super().__init__(conf, x, y)
-        self.is_carried = False  # To track whether the pot is being carried
-        self.speed = 5  # Speed at which the pot moves when thrown
-        self.direction = None  # Direction the pot will be thrown
+        self.is_carried = False 
+        self.is_broken = False
+        self.speed = 5  
+        self.direction = None  
 
     def update(self, dt):
         pass

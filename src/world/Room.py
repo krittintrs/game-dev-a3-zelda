@@ -117,11 +117,9 @@ class Room:
                 for doorway in self.doorways:
                     doorway.open = True
                 gSounds['door'].play()
-
+            
         def pot_function():
-            pot.state = "bomb"
-            pot.is_carried = False
-            pot.direction = 'right'
+            print('pot function')
 
         switch.on_collide = switch_function
         pot.on_collide = pot_function
@@ -153,8 +151,6 @@ class Room:
             object.update(dt)
             if self.player.Collides(object):
                 object.on_collide()
-
-
 
     def render(self, screen, x_mod, y_mod, shifting):
         for y in range(self.height):
