@@ -3,7 +3,7 @@ import math
 from src.states.BaseState import BaseState
 from src.HitBox import Hitbox
 import pygame
-from src.recourses import *
+from src.resources import *
 
 class PlayerAttackState(BaseState):
     def __init__(self, player, dungeon=None):

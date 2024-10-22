@@ -7,7 +7,7 @@ music_channel = pygame.mixer.Channel(0)
 music_channel.set_volume(0.2)
 
 from src.Dependencies import *
-from src.recourses import *
+from src.resources import *
 import src.tween.tween as tween
 
 class GameMain:

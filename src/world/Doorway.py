@@ -1,5 +1,5 @@
 from src.constants import *
-from src.recourses import *
+from src.resources import *
 
 class Doorway:
     def __init__(self, direction, open, room):

@@ -1,6 +1,6 @@
 from src.world.Room import Room
 from src.constants import *
-from src.recourses import *
+from src.resources import *
 import src.tween.tween as tween
 
 class Dungeon:

@@ -1,6 +1,6 @@
 from src.states.BaseState import BaseState
 import pygame, sys
-from src.recourses import *
+from src.resources import *
 from src.constants import *
 from src.entity_defs import *
 

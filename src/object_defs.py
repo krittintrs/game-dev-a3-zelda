@@ -1,4 +1,4 @@
-from src.recourses import *
+from src.resources import *
 class ObjectConf:
     def __init__(self, type, img, frame, solid, default_state, states, width, height):
         self.type = type

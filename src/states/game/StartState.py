@@ -2,7 +2,7 @@ from src.states.BaseState import BaseState
 import pygame, sys
 
 from src.constants import *
-from src.recourses import *
+from src.resources import *
 
 class StartState(BaseState):
     def __init__(self):

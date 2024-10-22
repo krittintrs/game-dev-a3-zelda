@@ -1,5 +1,5 @@
 from src.constants import *
-from src.recourses import *
+from src.resources import *
 class EntityConf:
     def __init__(self, animation, walk_speed=60, x=None, y=None, width=48, height=48, health=1, offset_x=0, offset_y=0):
         self.animation = animation

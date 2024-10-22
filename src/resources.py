@@ -15,7 +15,15 @@ gPlayer_animation_list = {"down": sprite_collection["character_walk_down"].anima
                         "attack_down": sprite_collection["character_attack_down"].animation,
                         "attack_right": sprite_collection["character_attack_right"].animation,
                         "attack_up": sprite_collection["character_attack_up"].animation,
-                        "attack_left": sprite_collection["character_attack_left"].animation
+                        "attack_left": sprite_collection["character_attack_left"].animation,
+                        # "pot_lift_down": sprite_collection["character_pot_lift_down"].animation,
+                        # "pot_lift_right": sprite_collection["character_pot_lift_right"].animation,
+                        # "pot_lift_up": sprite_collection["character_pot_lift_up"].animation,
+                        # "pot_lift_left": sprite_collection["character_pot_lift_left"].animation,
+                        # "pot_walk_down": sprite_collection["character_pot_walk_down"].animation,
+                        # "pot_walk_right": sprite_collection["character_pot_walk_right"].animation,
+                        # "pot_walk_up": sprite_collection["character_pot_walk_up"].animation,
+                        # "pot_walk_left": sprite_collection["character_pot_walk_left"].animation,
 }
 
 gSkeleton_animation_list = {"down": sprite_collection["skeleton_walk_down"].animation,
@@ -31,6 +39,7 @@ gHeart_image_list = [sprite_collection["heart_0"].image,sprite_collection["heart
 gRoom_image_list = Util.GenerateTiles("./graphics/tilesheet.png", 16, 16)
 gDoor_image_list = Util.GenerateTiles("./graphics/tilesheet.png", 16, 16, colorkey=(13, 7, 17, 255))
 gSwitch_image_list = Util.GenerateTiles("./graphics/switches.png", 16, 18)
+gPot_image_list = Util.GenerateTiles("./graphics/pots.png", 16, 16, colorkey=-1)
 
 gSounds = {
     'music': pygame.mixer.Sound('sounds/music.mp3'),
