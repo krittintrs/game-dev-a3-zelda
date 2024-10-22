@@ -1,5 +1,6 @@
 import random
 
+from src.Pot import Pot
 from src.entity_defs import *
 from src.constants import *
 from src.Dependencies import *
@@ -105,6 +106,10 @@ class Room:
                             x=random.randint(MAP_RENDER_OFFSET_X + TILE_SIZE, WIDTH-TILE_SIZE*2 - 48),
                             y=random.randint(MAP_RENDER_OFFSET_Y+TILE_SIZE, HEIGHT-(HEIGHT-MAP_HEIGHT*TILE_SIZE) + MAP_RENDER_OFFSET_Y - TILE_SIZE - 48))
 
+        pot = Pot(GAME_OBJECT_DEFS['pot'],
+                  x=random.randint(MAP_RENDER_OFFSET_X + TILE_SIZE, WIDTH-TILE_SIZE*2 - 48),
+                  y=random.randint(MAP_RENDER_OFFSET_Y+TILE_SIZE, HEIGHT-(HEIGHT-MAP_HEIGHT*TILE_SIZE) + MAP_RENDER_OFFSET_Y - TILE_SIZE - 48))
+
         def switch_function():
             if switch.state == "unpressed":
                 switch.state = "pressed"
@@ -113,9 +118,16 @@ class Room:
                     doorway.open = True
                 gSounds['door'].play()
 
+        def pot_function():
+            pot.state = "bomb"
+            pot.is_carried = False
+            pot.direction = 'right'
+
         switch.on_collide = switch_function
+        pot.on_collide = pot_function
 
         self.objects.append(switch)
+        self.objects.append(pot)
 
     def update(self, dt, events):
         if self.adjacent_offset_x != 0 or self.adjacent_offset_y != 0:
