@@ -137,6 +137,7 @@ class Room:
                     for object in self.objects:
                         if object.type == 'pot' and object.is_touching and object.is_broken == False:
                             object.Lift()
+                            self.player.ChangeState('pot_lift')
 
         self.player.update(dt, events)
 
@@ -165,6 +166,8 @@ class Room:
                     if self.player.Collides(object):
                         print('pot is in front of player - left')
                         object.is_touching = True
+                    else:
+                        object.is_touching = False
                     self.player.x = self.player.x + PLAYER_WALK_SPEED * dt
 
                 elif self.player.direction == 'right':
@@ -172,6 +175,8 @@ class Room:
                     if self.player.Collides(object):
                         print('pot is in front of player - right')
                         object.is_touching = True
+                    else:
+                        object.is_touching = False
                     self.player.x = self.player.x - PLAYER_WALK_SPEED * dt
 
                 elif self.player.direction == 'up':
@@ -179,6 +184,8 @@ class Room:
                     if self.player.Collides(object):
                         print('pot is in front of player - up')
                         object.is_touching = True
+                    else:
+                        object.is_touching = False
                     self.player.y = self.player.y + PLAYER_WALK_SPEED * dt
 
                 else:
@@ -186,6 +193,8 @@ class Room:
                     if self.player.Collides(object):
                         print('pot is in front of player - down')
                         object.is_touching = True
+                    else:
+                        object.is_touching = False
                     self.player.y = self.player.y - PLAYER_WALK_SPEED * dt
                         
 
