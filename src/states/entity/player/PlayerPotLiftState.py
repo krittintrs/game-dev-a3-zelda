@@ -13,10 +13,8 @@ class PlayerPotLiftState(BaseState):
         
     def Enter(self, params):
         #sounds
-        self.player.offset_x = 24
+        self.player.offset_x = 0
         self.player.offset_y = 15
-
-        direction = self.player.direction
 
         self.player.curr_animation.Refresh()
         self.player.ChangeAnimation("pot_lift_"+self.player.direction)
@@ -29,7 +27,8 @@ class PlayerPotLiftState(BaseState):
         
         if self.player.curr_animation.times_played > 0:
             self.player.curr_animation.times_played = 0
-            self.player.ChangeState("idle")  #check
+            self.player.ChangeState("pot_walk")  
+            return
 
         for event in events:
             if event.type == pygame.KEYDOWN:

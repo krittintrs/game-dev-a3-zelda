@@ -11,6 +11,8 @@ from src.states.entity.player.PlayerWalkState import PlayerWalkState
 from src.states.entity.player.PlayerIdleState import PlayerIdleState
 from src.states.entity.player.PlayerAttackState import PlayerAttackState
 from src.states.entity.player.PlayerPotLiftState import PlayerPotLiftState
+from src.states.entity.player.PlayerPotWalkState import PlayerPotWalkState
+from src.states.entity.player.PlayerPotIdleState import PlayerPotIdleState
 from src.StateMachine import StateMachine
 
 from src.world.Dungeon import Dungeon
@@ -31,7 +33,8 @@ class PlayState(BaseState):
             'idle': PlayerIdleState(self.player),
             'swing_sword': PlayerAttackState(self.player, self.dungeon),
             'pot_lift': PlayerPotLiftState(self.player, self.dungeon),
-            # 'pot_walk': PlayerPotWalkState(self.player, self.dungeon),
+            'pot_walk': PlayerPotWalkState(self.player, self.dungeon),
+            'pot_idle': PlayerPotIdleState(self.player)
         })
 
         self.player.ChangeState('walk')
