@@ -57,8 +57,8 @@ class EntityBase():
         self.rect.y = self.y
 
     def Collides(self, target):
-        return not(self.rect.x + self.width < target.rect.x or self.rect.x > target.rect.x + target.width or
-                   self.rect.y + self.height < target.rect.y or self.rect.y > target.rect.y + target.height)
+        return not(self.x + self.width < target.x or self.x > target.x + target.width or
+                   self.y + self.height < target.y or self.y > target.y + target.height)
 
     def Damage(self, dmg):
         self.health -= dmg

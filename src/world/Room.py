@@ -95,7 +95,7 @@ class Room:
             self.entities[i].state_machine = StateMachine()
             self.entities[i].state_machine.SetScreen(pygame.display.get_surface())
             self.entities[i].state_machine.SetStates({
-                "walk": EntityWalkState(self.entities[i]),
+                "walk": EntityWalkState(self.entities[i], room=self),
                 "idle": EntityIdleState(self.entities[i])
             })
 

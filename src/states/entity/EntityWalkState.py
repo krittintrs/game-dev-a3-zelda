@@ -4,10 +4,11 @@ from src.states.BaseState import BaseState
 from src.constants import *
 
 class EntityWalkState(BaseState):
-    def __init__(self, entity, dungeon=None):
+    def __init__(self, entity, dungeon=None, room=None):
         self.entity = entity
         self.entity.ChangeAnimation('down')
         self.dungeon = dungeon
+        self.room = room
 
         #AI control
         self.move_duration = 0
@@ -47,7 +48,24 @@ class EntityWalkState(BaseState):
                 self.entity.ChangeCoord(y=bottom_edge-self.entity.height)
                 self.bumped=True
 
-        #print(self.entity.rect.x, self.entity.rect.y, self.entity.walk_speed*dt)
+        # check collision with solid objects
+        if self.dungeon == None:
+            # ENTITY directly use room attribute
+            objects = self.room.objects
+        else: 
+            # PLAYER has dungeon attribute
+            objects = self.dungeon.current_room.objects
+
+        for object in objects: 
+            if self.entity.Collides(object) and object.solid:
+                if self.entity.direction == 'left':
+                    self.entity.x = self.entity.x + PLAYER_WALK_SPEED * dt
+                elif self.entity.direction == 'right':
+                    self.entity.x = self.entity.x - PLAYER_WALK_SPEED * dt
+                elif self.entity.direction == 'up':
+                    self.entity.y = self.entity.y + PLAYER_WALK_SPEED * dt
+                else:
+                    self.entity.y = self.entity.y - PLAYER_WALK_SPEED * dt
 
     def Enter(self, params):
         pass
