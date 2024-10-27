@@ -1,6 +1,7 @@
 from src.constants import *
 from src.object_defs import GAME_OBJECT_DEFS
 from src.GameObject import GameObject
+import pygame
 
 class Pot(GameObject):
     def __init__(self, conf, x, y):
@@ -13,6 +14,10 @@ class Pot(GameObject):
         self.speed = POT_THROWN_SPEED  # Adjust as needed
         self.direction = None
         self.throw_timer = 0  # Timer for tracking throw duration
+
+        self.explosion_radius = POT_EXPLODE_RADIUS  # Radius of explosion in pixels
+        self.is_exploding = False
+        self.alpha = 255  # Full opacity
 
     def update(self, dt):
         if self.is_thrown:
@@ -30,7 +35,8 @@ class Pot(GameObject):
                 self.x += self.speed * dt
 
             # Check for wall collision or time expiration
-            if self.CollidesWithWall() or self.throw_timer >= POT_TIMER:
+            if self.CollidesWithWall() or self.throw_timer >= POT_THROWN_TIMER:
+                print('initial explosion')
                 self.Explode()
 
     def Throw(self, direction):
@@ -40,17 +46,31 @@ class Pot(GameObject):
         self.direction = direction
         self.throw_timer = 0  # Reset the timer each time it’s thrown
 
-    def Explode(self):
-        self.Break()  # Transition pot to broken state
-        self.is_thrown = False
-        print("Pot exploded!")
-
     def CollidesWithWall(self):
         # This function would check the pot's position relative to the room’s boundaries.
         return self.x <= MAP_RENDER_OFFSET_X + TILE_SIZE or \
             self.x + self.width >= WIDTH - TILE_SIZE * 2 or \
             self.y <= MAP_RENDER_OFFSET_Y + TILE_SIZE - self.height/2 or \
             self.y + self.height >= HEIGHT - (HEIGHT - MAP_HEIGHT * TILE_SIZE) + MAP_RENDER_OFFSET_Y - TILE_SIZE
+
+    def Explode(self):
+        self.Break()  # Transition pot to broken state
+        self.is_thrown = False
+        self.is_exploding = True
+        self.explosion_time = POT_EXPLODE_TIMER  # Explosion effect duration in seconds
+
+    def draw_explosion(self, screen):
+        # explosion_center = (int(self.x + self.width / 2), int(self.y + self.height / 2))
+        # pygame.draw.circle(screen, (255, 0, 0), explosion_center, self.explosion_radius)
+        explosion_center = (int(self.x + self.width / 2), int(self.y + self.height / 2))
+        explosion_color = (255, 0, 0, self.alpha)  # Include alpha for transparency
+
+        # Create a surface for the explosion with the same size as the explosion radius
+        explosion_surface = pygame.Surface((self.explosion_radius * 2, self.explosion_radius * 2), pygame.SRCALPHA)
+        pygame.draw.circle(explosion_surface, explosion_color, (self.explosion_radius, self.explosion_radius), self.explosion_radius)
+
+        # Blit the explosion surface to the screen at the correct position
+        screen.blit(explosion_surface, (explosion_center[0] - self.explosion_radius, explosion_center[1] - self.explosion_radius))
 
     def Break(self):
         self.is_touching = False

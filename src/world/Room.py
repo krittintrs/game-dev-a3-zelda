@@ -160,7 +160,17 @@ class Room:
             if self.player.Collides(object):
                 object.on_collide()
 
-            if object.type == 'pot':
+            if isinstance(object, Pot) and object.is_exploding:
+                object.explosion_time -= dt
+                if object.explosion_time <= 0:
+                    object.is_exploding = False
+                else:
+                    object.alpha = max(0, object.alpha - (255 / POT_EXPLODE_TIMER) * dt)
+                    for entity in self.entities:
+                        if self.is_within_explosion(entity, object):
+                            entity.health = 0  # Set health to 0 to "kill" the entity
+
+            if isinstance(object, Pot) and object.state == 'normal':
                 if self.player.direction == 'left':
                     self.player.x = self.player.x - PLAYER_WALK_SPEED * dt
                     if self.player.Collides(object):
@@ -196,7 +206,13 @@ class Room:
                     else:
                         object.is_touching = False
                     self.player.y = self.player.y - PLAYER_WALK_SPEED * dt
-                        
+    
+    def is_within_explosion(self, entity, pot):
+        # Calculate distance between entity and explosion center
+        dist_x = entity.x - (pot.x + pot.width / 2)
+        dist_y = entity.y - (pot.y + pot.height / 2)
+        distance = math.sqrt(dist_x**2 + dist_y**2)
+        return distance <= pot.explosion_radius
 
     def render(self, screen, x_mod, y_mod, shifting):
         for y in range(self.height):
@@ -212,7 +228,8 @@ class Room:
 
         for object in self.objects:
             object.render(screen, self.adjacent_offset_x+x_mod, self.adjacent_offset_y+y_mod)
-
+            if isinstance(object, Pot) and object.is_exploding:
+                object.draw_explosion(screen)
 
         if not shifting:
             for entity in self.entities:
