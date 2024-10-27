@@ -5,6 +5,7 @@ from src.resources import *
 class Player(EntityBase):
     def __init__(self, conf):
         super(Player, self).__init__(conf)
+        self.is_ghost = False
 
     def update(self, dt, events):
         super().update(dt, events)

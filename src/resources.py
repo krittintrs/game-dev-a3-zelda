@@ -8,30 +8,35 @@ g_state_manager = StateMachine()
 sprite_collection = SpriteManager().spriteCollection
 
 
-gPlayer_animation_list = {"down": sprite_collection["character_walk_down"].animation,
-                         "right": sprite_collection["character_walk_right"].animation,
-                         "up": sprite_collection["character_walk_up"].animation,
-                         "left": sprite_collection["character_walk_left"].animation,
-                        "attack_down": sprite_collection["character_attack_down"].animation,
-                        "attack_right": sprite_collection["character_attack_right"].animation,
-                        "attack_up": sprite_collection["character_attack_up"].animation,
-                        "attack_left": sprite_collection["character_attack_left"].animation,
-                        "pot_lift_down": sprite_collection["character_pot_lift_down"].animation,
-                        "pot_lift_right": sprite_collection["character_pot_lift_right"].animation,
-                        "pot_lift_up": sprite_collection["character_pot_lift_up"].animation,
-                        "pot_lift_left": sprite_collection["character_pot_lift_left"].animation,
-                        "pot_walk_down": sprite_collection["character_pot_walk_down"].animation,
-                        "pot_walk_right": sprite_collection["character_pot_walk_right"].animation,
-                        "pot_walk_up": sprite_collection["character_pot_walk_up"].animation,
-                        "pot_walk_left": sprite_collection["character_pot_walk_left"].animation,
+gPlayer_animation_list = {
+    "down": sprite_collection["character_walk_down"].animation,
+    "right": sprite_collection["character_walk_right"].animation,
+    "up": sprite_collection["character_walk_up"].animation,
+    "left": sprite_collection["character_walk_left"].animation,
+    "attack_down": sprite_collection["character_attack_down"].animation,
+    "attack_right": sprite_collection["character_attack_right"].animation,
+    "attack_up": sprite_collection["character_attack_up"].animation,
+    "attack_left": sprite_collection["character_attack_left"].animation,
+    "pot_lift_down": sprite_collection["character_pot_lift_down"].animation,
+    "pot_lift_right": sprite_collection["character_pot_lift_right"].animation,
+    "pot_lift_up": sprite_collection["character_pot_lift_up"].animation,
+    "pot_lift_left": sprite_collection["character_pot_lift_left"].animation,
+    "pot_walk_down": sprite_collection["character_pot_walk_down"].animation,
+    "pot_walk_right": sprite_collection["character_pot_walk_right"].animation,
+    "pot_walk_up": sprite_collection["character_pot_walk_up"].animation,
+    "pot_walk_left": sprite_collection["character_pot_walk_left"].animation,
+    "ghost_down": sprite_collection["ghost_walk_down"].animation,
+    "ghost_right": sprite_collection["ghost_walk_right"].animation,
+    "ghost_up": sprite_collection["ghost_walk_up"].animation,
+    "ghost_left": sprite_collection["ghost_walk_left"].animation,
 }
 
-gSkeleton_animation_list = {"down": sprite_collection["skeleton_walk_down"].animation,
-                         "right": sprite_collection["skeleton_walk_right"].animation,
-                         "up": sprite_collection["skeleton_walk_up"].animation,
-                         "left": sprite_collection["skeleton_walk_left"].animation,
+gSkeleton_animation_list = {
+    "down": sprite_collection["skeleton_walk_down"].animation,
+    "right": sprite_collection["skeleton_walk_right"].animation,
+    "up": sprite_collection["skeleton_walk_up"].animation,
+    "left": sprite_collection["skeleton_walk_left"].animation,
 }
-
 
 gHeart_image_list = [sprite_collection["heart_0"].image,sprite_collection["heart_2"].image,
                     sprite_collection["heart_4"].image]
@@ -48,7 +53,8 @@ gSounds = {
     'hit_player':  pygame.mixer.Sound('sounds/hit_player.wav'),
     'door':  pygame.mixer.Sound('sounds/door.wav'),
     'pot_bomb': pygame.mixer.Sound('sounds/pot_bomb.wav'),
-    'pot_pickup': pygame.mixer.Sound('sounds/pot_pickup.wav')
+    'pot_pickup': pygame.mixer.Sound('sounds/pot_pickup.wav'),
+    'ghost_eat': pygame.mixer.Sound('sounds/ghost_eat.wav')
 }
 
 gFonts = {

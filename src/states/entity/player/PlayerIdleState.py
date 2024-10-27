@@ -22,3 +22,5 @@ class PlayerIdleState(EntityIdleState):
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
                     self.entity.ChangeState('swing_sword')
+                if event.key == pygame.K_e:
+                    self.entity.ChangeState('ghost_idle')

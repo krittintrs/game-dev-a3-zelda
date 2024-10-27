@@ -151,7 +151,7 @@ class Room:
                 entity.ProcessAI({"room":self}, dt)
                 entity.update(dt, events)
 
-            if not entity.is_dead and self.player.Collides(entity) and not self.player.invulnerable:
+            if not entity.is_dead and self.player.Collides(entity) and not self.player.invulnerable and not self.player.is_ghost:
                 gSounds['hit_player'].play()
                 self.player.Damage(1)
                 self.player.SetInvulnerable(1.5)
@@ -208,7 +208,7 @@ class Room:
                     else:
                         object.is_touching = False
                     self.player.y = self.player.y - PLAYER_WALK_SPEED * dt
-    
+
     def is_within_explosion(self, entity, pot):
         # Calculate distance between entity and explosion center
         pot_center_x = (pot.x + pot.width / 2)

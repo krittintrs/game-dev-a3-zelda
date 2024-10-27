@@ -92,6 +92,7 @@ class SpriteManager:
             [
                 "./sprite/CharacterAnimation.json",
                 "./sprite/SkeletonAnimation.json",
+                "./sprite/GhostAnimation.json",
                 "./sprite/Heart.json",
                 "./sprite/CharacterIdle.json",
                 "./sprite/CharacterAttack.json",
