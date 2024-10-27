@@ -9,7 +9,7 @@ class PlayerPotIdleState(EntityIdleState):
     def Enter(self, params):
         self.player.offset_x = 0
         self.player.offset_y = 15
-        
+        self.pot = params['pot']
         self.player.ChangeAnimation('pot_walk_' + self.player.direction)
 
     def Exit(self):
@@ -18,7 +18,7 @@ class PlayerPotIdleState(EntityIdleState):
     def update(self, dt, events):
         pressedKeys = pygame.key.get_pressed()
         if pressedKeys[pygame.K_LEFT] or pressedKeys [pygame.K_RIGHT] or pressedKeys [pygame.K_UP] or pressedKeys [pygame.K_DOWN]:
-            self.entity.ChangeState('pot_walk')
+            self.entity.ChangeState('pot_walk', {'pot': self.pot})  
 
         for event in events:
             if event.type == pygame.KEYDOWN:

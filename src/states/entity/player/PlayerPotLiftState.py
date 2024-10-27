@@ -1,7 +1,7 @@
 import math
 
 from src.states.BaseState import BaseState
-from src.HitBox import Hitbox
+from src.constants import *
 import pygame
 from src.resources import *
 
@@ -16,6 +16,10 @@ class PlayerPotLiftState(BaseState):
         self.player.offset_x = 0
         self.player.offset_y = 15
 
+        self.pot = params['pot']
+        self.pot.x = self.player.x - POT_OFFSET_X
+        self.pot.y = self.player.y - POT_OFFSET_Y
+
         self.player.curr_animation.Refresh()
         self.player.ChangeAnimation("pot_lift_"+self.player.direction)
 
@@ -27,7 +31,7 @@ class PlayerPotLiftState(BaseState):
         
         if self.player.curr_animation.times_played > 0:
             self.player.curr_animation.times_played = 0
-            self.player.ChangeState("pot_walk")  
+            self.player.ChangeState("pot_walk", {'pot': self.pot})  
             return
 
         for event in events:

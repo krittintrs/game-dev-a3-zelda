@@ -14,6 +14,7 @@ class PlayerPotWalkState(EntityWalkState):
     def Enter(self, params):
         print('<<<<<<< ENTER POT WALK STATE >>>>>>>>>')
         self.player.ChangeAnimation("pot_walk_"+self.player.direction)
+        self.pot = params['pot']
 
     def update(self, dt, events):
         pressedKeys = pygame.key.get_pressed()
@@ -30,7 +31,7 @@ class PlayerPotWalkState(EntityWalkState):
             self.player.direction = 'up'
             self.player.ChangeAnimation("pot_walk_"+self.player.direction)
         else:
-            self.player.ChangeState('pot_idle')
+            self.player.ChangeState('pot_idle', {'pot': self.pot})  
 
         for event in events:
             if event.type == pygame.KEYDOWN:
@@ -82,3 +83,7 @@ class PlayerPotWalkState(EntityWalkState):
                         self.dungeon.BeginShifting(0,  HEIGHT)
 
                 self.entity.y = self.entity.y - PLAYER_WALK_SPEED * dt
+        # If not bumped, move the pot along with player
+        else:
+            self.pot.x = self.player.x - POT_OFFSET_X
+            self.pot.y = self.player.y - POT_OFFSET_Y

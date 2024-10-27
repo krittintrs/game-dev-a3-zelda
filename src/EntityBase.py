@@ -67,8 +67,8 @@ class EntityBase():
         self.invulnerable = True
         self.invulnerable_duration = duration
 
-    def ChangeState(self, name):
-        self.state_machine.Change(name)
+    def ChangeState(self, name, params=None):
+        self.state_machine.Change(name, params)
 
     def ChangeAnimation(self, name):
         self.curr_animation = self.animation_list[name]
