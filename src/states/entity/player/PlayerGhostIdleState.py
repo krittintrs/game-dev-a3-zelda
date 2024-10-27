@@ -32,5 +32,4 @@ class PlayerGhostIdleState(EntityIdleState):
         for event in events:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
-                    self.entity.is_ghost = False
-                    self.entity.ChangeState('idle')
+                    self.player.return_from_ghost()

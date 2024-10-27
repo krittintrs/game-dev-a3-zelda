@@ -54,14 +54,18 @@ class PlayerAttackState(BaseState):
     def update(self, dt, events):
         for entity in self.dungeon.current_room.entities:
             if entity.Collides(self.sword_hitbox) and not entity.invulnerable:
-                entity.Damage(1)
+                entity.Damage(self.player.damage)
                 entity.SetInvulnerable(0.2)
-                gSounds['hit_enemy'].play()
+                if self.player.damage > 1:
+                    gSounds['hit_enemy_2'].play()
+                else:
+                    gSounds['hit_enemy'].play()
         
         for object in self.dungeon.current_room.objects: 
             if object.type == 'pot':
                 if object.Collides(self.sword_hitbox) and object.is_broken == False:
-                    object.Break()
+                    new_power_up = object.Break()
+                    self.dungeon.current_room.power_ups.append(new_power_up)
 
         if self.player.curr_animation.times_played > 0:
             self.player.curr_animation.times_played = 0

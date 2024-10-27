@@ -1,6 +1,7 @@
 from src.constants import *
 from src.resources import *
 from src.GameObject import GameObject
+from src.Powerup import PowerUp
 import pygame
 
 class Pot(GameObject):
@@ -58,7 +59,7 @@ class Pot(GameObject):
         gSounds['pot_bomb'].play()
         self.is_thrown = False
         self.is_exploding = True
-        self.explosion_time = POT_EXPLODE_TIMER  # Explosion effect duration in seconds
+        self.explosion_time = POT_EXPLODE_TIMER  
 
     def draw_explosion(self, screen):
         explosion_center = (int(self.x + self.width / 2), int(self.y + self.height / 2))
@@ -76,6 +77,11 @@ class Pot(GameObject):
         self.is_broken = True
         self.state = 'broken'
         self.solid = False
+
+        power_up_x = self.x + self.width // 2 - POWER_UP_SIZE/2
+        power_up_y = self.y + self.height // 2 - POWER_UP_SIZE/2
+        new_power_up = PowerUp(power_up_x, power_up_y)
+        return new_power_up
 
     def Lift(self):
         gSounds['pot_pickup'].play()

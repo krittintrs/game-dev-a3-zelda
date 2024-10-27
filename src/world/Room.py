@@ -12,6 +12,7 @@ from src.states.entity.EntityWalkState import EntityWalkState
 from src.StateMachine import StateMachine
 from src.GameObject import GameObject
 from src.object_defs import *
+from src.Powerup import PowerUp
 import pygame
 
 
@@ -35,6 +36,7 @@ class Room:
         self.doorways.append(Doorway('left', False, self))
         self.doorways.append(Doorway('right', False, self))
 
+        self.power_ups = []
 
         # for collisions
         self.player = player
@@ -161,6 +163,7 @@ class Room:
             if self.player.Collides(object):
                 object.on_collide()
 
+            # Check if Pot is exploding
             if isinstance(object, Pot) and object.is_exploding:
                 object.explosion_time -= dt
                 if object.explosion_time <= 0:
@@ -171,7 +174,8 @@ class Room:
                         if self.is_within_explosion(entity, object):
                             entity.Damage(2)
                             entity.SetInvulnerable(0.2)
-
+            
+            # Check if Player touch Pot
             if isinstance(object, Pot) and object.state == 'normal':
                 if self.player.direction == 'left':
                     self.player.x = self.player.x - PLAYER_WALK_SPEED * dt
@@ -209,6 +213,16 @@ class Room:
                         object.is_touching = False
                     self.player.y = self.player.y - PLAYER_WALK_SPEED * dt
 
+        # Update power-ups
+        for power_up in self.power_ups:
+            power_up.update(dt)
+
+        # Check for player collision with power-ups
+        for power_up in self.power_ups:
+            if power_up.active and self.player.Collides(power_up):  # Check for collision with the player
+                power_up.collect(self.player)  # Apply power-up effect to the player
+                self.power_ups.remove(power_up)  # Remove power-up after collection
+
     def is_within_explosion(self, entity, pot):
         # Calculate distance between entity and explosion center
         pot_center_x = (pot.x + pot.width / 2)
@@ -236,9 +250,15 @@ class Room:
             if isinstance(object, Pot) and object.is_exploding:
                 object.draw_explosion(screen)
 
+        # Update power-ups
+        for power_up in self.power_ups:
+            if power_up.active:
+                power_up.render(screen)  # Render power-up
+                
         if not shifting:
             for entity in self.entities:
                 if not entity.is_dead:
                     entity.render(self.adjacent_offset_x, self.adjacent_offset_y + y_mod)
             if self.player:
-                self.player.render()
+                self.player.render(screen)
+

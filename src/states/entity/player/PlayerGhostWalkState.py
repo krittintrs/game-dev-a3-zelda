@@ -44,9 +44,8 @@ class PlayerGhostWalkState(EntityWalkState):
         for event in events:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
-                    self.entity.is_ghost = False
-                    self.entity.ChangeState('idle')
-
+                    self.player.return_from_ghost()
+                    
         # move and bump to the wall check
         super().update(dt, events)
 

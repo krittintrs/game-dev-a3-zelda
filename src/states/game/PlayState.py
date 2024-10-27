@@ -41,7 +41,7 @@ class PlayState(BaseState):
             'ghost_idle': PlayerGhostIdleState(self.player, self.dungeon),
         })
 
-        self.player.ChangeState('ghost_walk')
+        self.player.ChangeState('idle')
 
     def update(self, dt, events):
         for event in events:
@@ -67,7 +67,7 @@ class PlayState(BaseState):
 
         health_left = self.player.health
 
-        for i in range(3):
+        for i in range(PLAYER_MAX_HEALTH//2):
             if health_left > 1:
                 heart_frame = 2
             elif health_left ==1:

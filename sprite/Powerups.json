@@ -1,0 +1,30 @@
+{
+    "spriteSheetURL": "./graphics/powerups.png",
+    "type":"none",
+    "size":[16,16],
+    "sprites":[
+        {
+            "name":"powerup_ghost",
+            "x":0,
+            "y":0,
+            "scalefactor":2,
+            "colorKey":-1
+        },
+        {
+            "name":"powerup_damage",
+            "x":16,
+            "y":0,
+            "scalefactor":2,
+            "colorKey":-1
+        },
+        {
+            "name":"powerup_heal",
+            "x":32,
+            "y":0,
+            "scalefactor":2,
+            "colorKey":-1
+        }
+    ]
+}
+
+
