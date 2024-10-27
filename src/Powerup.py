@@ -10,7 +10,6 @@ class PowerUp:
         self.width = POWER_UP_SIZE  # Width of the power-up
         self.height = POWER_UP_SIZE  # Height of the power-up
         self.type = random.choice([PowerUpType.GHOST, PowerUpType.DAMAGE, PowerUpType.HEAL])
-        print(self.type, self.type.value)
         self.image = powerups_image_list[self.type.value]
         self.active = True  # Indicates if the power-up is active
 

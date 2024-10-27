@@ -163,6 +163,20 @@ class Room:
             if self.player.Collides(object):
                 object.on_collide()
 
+            # Check if Pot is thrown
+            if isinstance(object, Pot) and object.is_thrown:
+                # Check for wall collision or time expiration
+                if object.CollidesWithWall() or object.throw_timer >= POT_THROWN_TIMER:
+                    new_power_up = object.Explode()
+                    if random.random() <= 0.2: 
+                        self.power_ups.append(new_power_up)
+                else:
+                    for entity in self.entities:
+                        if object.Collides(entity): 
+                            new_power_up = object.Explode()
+                            if random.random() <= 0.2: 
+                                self.power_ups.append(new_power_up)
+
             # Check if Pot is exploding
             if isinstance(object, Pot) and object.is_exploding:
                 object.explosion_time -= dt

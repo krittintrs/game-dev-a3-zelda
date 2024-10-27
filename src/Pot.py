@@ -35,11 +35,6 @@ class Pot(GameObject):
             elif self.direction == 'right':
                 self.x += self.speed * dt
 
-            # Check for wall collision or time expiration
-            if self.CollidesWithWall() or self.throw_timer >= POT_THROWN_TIMER:
-                print('initial explosion')
-                self.Explode()
-
     def Throw(self, direction):
         self.is_carried = False
         self.is_touching = False
@@ -55,11 +50,12 @@ class Pot(GameObject):
             self.y + self.height >= HEIGHT - (HEIGHT - MAP_HEIGHT * TILE_SIZE) + MAP_RENDER_OFFSET_Y - TILE_SIZE
 
     def Explode(self):
-        self.Break()  # Transition pot to broken state
+        new_power_up = self.Break()  # Transition pot to broken state
         gSounds['pot_bomb'].play()
         self.is_thrown = False
         self.is_exploding = True
         self.explosion_time = POT_EXPLODE_TIMER  
+        return new_power_up
 
     def draw_explosion(self, screen):
         explosion_center = (int(self.x + self.width / 2), int(self.y + self.height / 2))
