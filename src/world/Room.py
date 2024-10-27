@@ -106,10 +106,6 @@ class Room:
                             x=random.randint(MAP_RENDER_OFFSET_X + TILE_SIZE, WIDTH-TILE_SIZE*2 - 48),
                             y=random.randint(MAP_RENDER_OFFSET_Y+TILE_SIZE, HEIGHT-(HEIGHT-MAP_HEIGHT*TILE_SIZE) + MAP_RENDER_OFFSET_Y - TILE_SIZE - 48))
 
-        pot = Pot(GAME_OBJECT_DEFS['pot'],
-                  x=random.randint(MAP_RENDER_OFFSET_X + TILE_SIZE, WIDTH-TILE_SIZE*2 - 48),
-                  y=random.randint(MAP_RENDER_OFFSET_Y+TILE_SIZE, HEIGHT-(HEIGHT-MAP_HEIGHT*TILE_SIZE) + MAP_RENDER_OFFSET_Y - TILE_SIZE - 48))
-
         def switch_function():
             if switch.state == "unpressed":
                 switch.state = "pressed"
@@ -117,15 +113,20 @@ class Room:
                 for doorway in self.doorways:
                     doorway.open = True
                 gSounds['door'].play()
-            
-        def pot_function():
-            pass
 
         switch.on_collide = switch_function
-        pot.on_collide = pot_function
-
         self.objects.append(switch)
-        self.objects.append(pot)
+
+        for _ in range(5):
+            pot = Pot(GAME_OBJECT_DEFS['pot'],
+                  x=random.randint(MAP_RENDER_OFFSET_X + TILE_SIZE, WIDTH-TILE_SIZE*2 - 48),
+                  y=random.randint(MAP_RENDER_OFFSET_Y+TILE_SIZE, HEIGHT-(HEIGHT-MAP_HEIGHT*TILE_SIZE) + MAP_RENDER_OFFSET_Y - TILE_SIZE - 48))
+            
+            def pot_function():
+                pass
+            
+            pot.on_collide = pot_function
+            self.objects.append(pot)
 
     def update(self, dt, events):
         if self.adjacent_offset_x != 0 or self.adjacent_offset_y != 0:
@@ -168,7 +169,8 @@ class Room:
                     object.alpha = max(0, object.alpha - (255 / POT_EXPLODE_TIMER) * dt)
                     for entity in self.entities:
                         if self.is_within_explosion(entity, object):
-                            entity.health = 0  # Set health to 0 to "kill" the entity
+                            entity.Damage(2)
+                            entity.SetInvulnerable(0.2)
 
             if isinstance(object, Pot) and object.state == 'normal':
                 if self.player.direction == 'left':
@@ -209,10 +211,13 @@ class Room:
     
     def is_within_explosion(self, entity, pot):
         # Calculate distance between entity and explosion center
-        dist_x = entity.x - (pot.x + pot.width / 2)
-        dist_y = entity.y - (pot.y + pot.height / 2)
-        distance = math.sqrt(dist_x**2 + dist_y**2)
-        return distance <= pot.explosion_radius
+        pot_center_x = (pot.x + pot.width / 2)
+        pot_center_y = (pot.y + pot.height / 2)
+        dist1 = math.sqrt((entity.x - pot_center_x)**2 + (entity.y - pot_center_y)**2)
+        dist2 = math.sqrt((entity.x + entity.width - pot_center_x)**2 + (entity.y - pot_center_y)**2)
+        dist3 = math.sqrt((entity.x - pot_center_x)**2 + (entity.y + entity.height - pot_center_y)**2)
+        dist4 = math.sqrt((entity.x + entity.width - pot_center_x)**2 + (entity.y + entity.height - pot_center_y)**2)
+        return dist1 <= pot.explosion_radius or dist2 <= pot.explosion_radius or dist3 <= pot.explosion_radius or dist4 <= pot.explosion_radius
 
     def render(self, screen, x_mod, y_mod, shifting):
         for y in range(self.height):

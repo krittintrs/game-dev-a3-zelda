@@ -1,5 +1,5 @@
 from src.constants import *
-from src.object_defs import GAME_OBJECT_DEFS
+from src.resources import *
 from src.GameObject import GameObject
 import pygame
 
@@ -55,13 +55,12 @@ class Pot(GameObject):
 
     def Explode(self):
         self.Break()  # Transition pot to broken state
+        gSounds['pot_bomb'].play()
         self.is_thrown = False
         self.is_exploding = True
         self.explosion_time = POT_EXPLODE_TIMER  # Explosion effect duration in seconds
 
     def draw_explosion(self, screen):
-        # explosion_center = (int(self.x + self.width / 2), int(self.y + self.height / 2))
-        # pygame.draw.circle(screen, (255, 0, 0), explosion_center, self.explosion_radius)
         explosion_center = (int(self.x + self.width / 2), int(self.y + self.height / 2))
         explosion_color = (255, 0, 0, self.alpha)  # Include alpha for transparency
 
@@ -79,6 +78,7 @@ class Pot(GameObject):
         self.solid = False
 
     def Lift(self):
+        gSounds['pot_pickup'].play()
         self.is_carried = True
         self.is_touching = False
         self.state = 'bomb'
