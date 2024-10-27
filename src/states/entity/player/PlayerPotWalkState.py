@@ -36,7 +36,7 @@ class PlayerPotWalkState(EntityWalkState):
         for event in events:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_q:
-                    # TODO - Throw Pot
+                    self.pot.Throw(self.player.direction)
                     self.player.ChangeState('idle')
                 
         # move and bump to the wall check
