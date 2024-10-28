@@ -27,8 +27,6 @@ class PlayerPotLiftState(BaseState):
         pass
 
     def update(self, dt, events):
-        # TODO: Implement pot handling
-        
         if self.player.curr_animation.times_played > 0:
             self.player.curr_animation.times_played = 0
             self.player.ChangeState("pot_walk", {'pot': self.pot})  
